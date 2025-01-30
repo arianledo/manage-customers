@@ -15,7 +15,7 @@ public class CustomerServiceImp implements CustomerService {
     @Autowired
     private CustomerRepository repository;
 
-    public Customer getCustomer(Integer id) {
+    public Customer getCustomer(Long id) {
         Optional<Customer> customer = repository.findById(id);
         return customer.orElse(null);
     }
@@ -28,7 +28,7 @@ public class CustomerServiceImp implements CustomerService {
         return result;
     }
 
-    public void removeCustomer(Integer id) {
+    public void removeCustomer(Long id) {
         repository.deleteById(id);
     }
 
@@ -36,18 +36,17 @@ public class CustomerServiceImp implements CustomerService {
         repository.save(customer);
     }
 
-    public void updateCustomer(Integer id, Customer updateCustomer) {
+    public void updateCustomer(Long id, Customer updateCustomer) {
         if(repository.existsById(id)) {
            updateCustomer.setId(id);
            repository.save(updateCustomer);
         }
     }
 
-
-    public List<Customer> searchCustomer(String email, String address) {
+    public List<Customer> searchCustomer(String email, String phone, String firstname,String lastname) {
         List<Customer> result = new ArrayList<>();
 
-        Iterable<Customer> iterable = repository.findByEmailOrAddress(email, address);
+        Iterable<Customer> iterable = repository.findByEmailOrPhoneOrFirstnameOrLastname(email, phone, firstname, lastname);
         iterable.forEach(result::add);
         return result;
     }

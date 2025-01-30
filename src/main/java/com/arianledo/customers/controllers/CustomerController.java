@@ -16,7 +16,7 @@ public class CustomerController {
     private CustomerService service;
 
     @GetMapping("/{id}") // Traer un cliente especifico
-    public Customer getCustomer(@PathVariable Integer id) {
+    public Customer getCustomer(@PathVariable Long id) {
         return service.getCustomer(id);
     }
 
@@ -26,7 +26,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}") // Eliminar un cliente
-    public void removeCustomer(@PathVariable Integer id) {
+    public void removeCustomer(@PathVariable Long id) {
         service.removeCustomer(id);
     }
 
@@ -36,22 +36,17 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}") // Modificar cliente
-    public void updateCustomer(@PathVariable Integer id,
+    public void updateCustomer(@PathVariable Long id,
                                @RequestBody Customer updateCustomer) {
         service.updateCustomer(id, updateCustomer);
     }
 
-
-//    @GetMapping("/api/customer/search") // Busqueda
-//    public List<Customer> searchCustomer(@RequestParam(name = "firstname", required = false) String firstname,
-//                                      @RequestParam(name = "lastname", required = false) String lastname) {
-//        return service.searchCustomer(firstname, lastname);
-//    }
-
     @GetMapping("/search") // Busqueda
     public List<Customer> searchCustomer(@RequestParam(name = "email", required = false) String email,
-                                         @RequestParam(name = "address", required = false) String address) {
-        return service.searchCustomer(email, address);
+                                         @RequestParam(name = "phone", required = false) String phone,
+                                         @RequestParam(name = "firstname", required = false) String firstname,
+                                         @RequestParam(name = "lastname", required = false) String lastname) {
+        return service.searchCustomer(email, phone, firstname, lastname);
     }
 
 }

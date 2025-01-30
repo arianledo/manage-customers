@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface CustomerService {
 
-    Customer getCustomer(Integer id);
+    Customer getCustomer(Long id);
     List<Customer> getAllCustomers();
-    void removeCustomer(Integer id);
+    void removeCustomer(Long id);
     void addCustomer(Customer customer);
-    void updateCustomer(Integer id, Customer updateCustomer);
-    List<Customer> searchCustomer(String email, String address);
+    void updateCustomer(Long id, Customer updateCustomer);
+    List<Customer> searchCustomer(String email, String phone, String firstname,String lastname);
 
 }

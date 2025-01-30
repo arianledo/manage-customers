@@ -1,26 +1,22 @@
 package com.arianledo.customers.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "customer_entities")
+public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
+    private String name;
+    @Column(unique = true, nullable = false)
     private String email;
     private String phone;
     private String address;
+    private String website;
     @CreationTimestamp
     private String creationDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_entity_id", nullable = false)
-    private CustomerEntity customerEntity;
-
 }
