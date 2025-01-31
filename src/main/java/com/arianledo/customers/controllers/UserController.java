@@ -15,28 +15,28 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/{id}") // Traer un cliente especifico
+    @GetMapping("/{id}") // Traer un usuario especifico
     public UserEntity getUser(@PathVariable Long id) {
         return service.getUser(id);
     }
 
     //Delete this method in the future
-    @GetMapping // Traer todos los clientes
+    @GetMapping // Traer todos los usuario
     public List<UserEntity> getAllUsers() {
         return service.getAllUsers();
     }
 
-    @DeleteMapping("/{id}") // Eliminar un cliente
+    @DeleteMapping("/{id}") // Eliminar un usuario
     public void removeUser(@PathVariable Long id) {
         service.removeUser(id);
     }
 
-    @PostMapping ("/register")// Agregar cliente
-    public void register(@RequestBody UserEntity user) {
-        service.addUser(user);
-    }
+//    @PostMapping ("/register")
+//    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthCreateUserRequest authCreateUserRequest) {
+//        return new ResponseEntity<>(userDetailsService.createUser(authCreateUserRequest), HttpStatus.CREATED);
+//    }
 
-    @PutMapping("/{id}") // Modificar cliente
+    @PutMapping("/{id}") // Modificar usuario
     public void updateUser(@PathVariable Long id,
                                @RequestBody UserEntity updateUser) {
         service.updateUser(id, updateUser);

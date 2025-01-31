@@ -1,5 +1,6 @@
 package com.arianledo.customers.controllers;
 
+import com.arianledo.customers.controllers.dto.AuthCreateUserRequest;
 import com.arianledo.customers.controllers.dto.AuthResponse;
 import com.arianledo.customers.controllers.dto.AuthLoginRequest;
 import com.arianledo.customers.services.UserDetailServiceImpl;
@@ -17,8 +18,13 @@ public class AuthenticationController {
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
-    @PostMapping("/login")
+    @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login (@RequestBody @Valid AuthLoginRequest userRequest) {
         return new ResponseEntity<>(userDetailService.loginUser(userRequest), HttpStatus.OK);
+    }
+
+    @PostMapping ("/sign-up")
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthCreateUserRequest authCreateUserRequest) {
+        return new ResponseEntity<>(userDetailService.createUser(authCreateUserRequest), HttpStatus.CREATED);
     }
 }

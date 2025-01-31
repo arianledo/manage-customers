@@ -36,9 +36,8 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         httpSecurity.authorizeHttpRequests(authorize -> {
-                authorize.requestMatchers("/api/user/register", "/api/auth/login").permitAll();
-                authorize.requestMatchers(HttpMethod.DELETE, "/api/user/**").hasRole("ADMIN");
-                authorize.requestMatchers(HttpMethod.GET, "/api/user/**").hasRole("ADMIN");
+                authorize.requestMatchers("/api/auth/**").permitAll();
+                authorize.requestMatchers("/api/user/**").hasRole("ADMIN");
                 authorize.requestMatchers("/api/**").authenticated();
          });
 
@@ -46,21 +45,21 @@ public class SecurityConfiguration {
         return httpSecurity.build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailService) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailService);
-        return provider;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
+//
+//    @Bean
+//    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailService) {
+//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//        provider.setPasswordEncoder(passwordEncoder());
+//        provider.setUserDetailsService(userDetailService);
+//        return provider;
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
 }

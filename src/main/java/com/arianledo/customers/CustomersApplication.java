@@ -4,6 +4,7 @@ import com.arianledo.customers.entities.PermissionEntity;
 import com.arianledo.customers.entities.RoleEntity;
 import com.arianledo.customers.entities.RoleEnum;
 import com.arianledo.customers.entities.UserEntity;
+import com.arianledo.customers.repository.RoleRepository;
 import com.arianledo.customers.repository.UserRepository;
 import com.arianledo.customers.utils.Constants;
 import com.google.common.hash.Hashing;
@@ -24,7 +25,7 @@ public class CustomersApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(UserRepository userRepository) {
+	CommandLineRunner init(UserRepository userRepository, RoleRepository roleRepository) {
 		return args -> {
 			/*Create permissions*/
 			PermissionEntity writeAllPermission = PermissionEntity.builder().name("WRITE_ALL").build();
@@ -62,7 +63,7 @@ public class CustomersApplication {
 					.accountNonExpired(true)
 					.accountNonLocked(true)
 					.credentialsNonExpired(true)
-					.roles(Set.of(adminRole))
+					.roles(Set.of(adminRole, invitedRole, userRole))
 					.build();
 
 			if(userRepository.findUserEntitiesByUsername("admin").isEmpty()) {
