@@ -20,7 +20,7 @@ public class Customer {
     private String creationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_entity_id", nullable = false)
-    private CustomerEntity customerEntity;
+    @JoinColumn(name = "business_entity_id", nullable = false)
+    private BusinessEntity businessEntity;
 
 }

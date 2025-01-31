@@ -21,11 +21,4 @@ public class AuthenticationController {
     public ResponseEntity<AuthResponse> login (@RequestBody @Valid AuthLoginRequest userRequest) {
         return new ResponseEntity<>(userDetailService.loginUser(userRequest), HttpStatus.OK);
     }
-
-//    @PostMapping("/auth/login")
-//    public String login(@RequestBody RequestLogin requestLogin) {
-//        UserEntity user = authService.login(requestLogin.getUsername(), requestLogin.getPassword());
-//
-//        return JwtUtils.generateToken(user);
-//    }
 }

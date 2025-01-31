@@ -37,8 +37,8 @@ public class SecurityConfiguration {
 
         httpSecurity.authorizeHttpRequests(authorize -> {
                 authorize.requestMatchers("/api/user/register", "/api/auth/login").permitAll();
-                authorize.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN");
-                authorize.requestMatchers(HttpMethod.PUT).hasRole("ADMIN");
+                authorize.requestMatchers(HttpMethod.DELETE, "/api/user/**").hasRole("ADMIN");
+                authorize.requestMatchers(HttpMethod.GET, "/api/user/**").hasRole("ADMIN");
                 authorize.requestMatchers("/api/**").authenticated();
          });
 

@@ -38,6 +38,6 @@ public class UserEntity {
     private Set<RoleEntity> roles = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_entity_id")
-    private CustomerEntity customerEntity;
+    @JoinColumn(name = "business_entity_id")
+    private BusinessEntity businessEntity;
 }

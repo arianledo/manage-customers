@@ -6,8 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
-@Table(name = "customer_entities")
-public class CustomerEntity {
+@Table(name = "business_entities")
+public class BusinessEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

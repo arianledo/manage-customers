@@ -62,10 +62,12 @@ public class CustomersApplication {
 					.accountNonExpired(true)
 					.accountNonLocked(true)
 					.credentialsNonExpired(true)
-					.roles(Set.of(adminRole, invitedRole, userRole))
+					.roles(Set.of(adminRole))
 					.build();
 
-			userRepository.save(admin);
+			if(userRepository.findUserEntitiesByUsername("admin").isEmpty()) {
+				userRepository.save(admin);
+			}
 		};
 	}
 
