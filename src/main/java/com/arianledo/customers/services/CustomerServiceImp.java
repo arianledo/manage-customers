@@ -1,9 +1,12 @@
 package com.arianledo.customers.services;
 
+import com.arianledo.customers.entities.BusinessEntity;
 import com.arianledo.customers.entities.Customer;
+import com.arianledo.customers.repository.BusinessEntityRepository;
 import com.arianledo.customers.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,32 +18,49 @@ public class CustomerServiceImp implements CustomerService {
     @Autowired
     private CustomerRepository repository;
 
-    public Customer getCustomer(Long id) {
-        Optional<Customer> customer = repository.findById(id);
-        return customer.orElse(null);
+    @Autowired
+    private BusinessEntityRepository businessEntityRepository;
+
+    @Transactional
+    public Customer addCustomer(Long businessEntityId, Customer customer) {
+        BusinessEntity businessEntity = businessEntityRepository.findById(businessEntityId)
+                .orElseThrow(() -> new RuntimeException("Business Entity not found"));
+        customer.setBusinessEntity(businessEntity);
+
+        return repository.save(customer);
     }
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers(Long businessEntityId) {
         List<Customer> result = new ArrayList<>();
 
-        Iterable<Customer> iterable = repository.findAll();
+        Iterable<Customer> iterable = repository.findByBusinessEntityId(businessEntityId);
         iterable.forEach(result::add);
         return result;
     }
 
-    public void removeCustomer(Long id) {
+    public Customer updateCustomer(Long businessEntityId, Long id, Customer updateCustomer) {
+        BusinessEntity businessEntity = businessEntityRepository.findById(businessEntityId)
+                .orElseThrow(() -> new RuntimeException("Business Entity not found"));
+        updateCustomer.setBusinessEntity(businessEntity);
+
+        if(repository.existsById(id)) {
+            updateCustomer.setId(id);
+            return repository.save(updateCustomer);
+        } else {
+            throw new RuntimeException("Customer not found");
+        }
+    }
+
+    public void removeCustomer(Long businessEntityId, Long id) {
+        if(!repository.existsById(id)) {
+            throw new RuntimeException("Customer not found");
+        }
         repository.deleteById(id);
     }
 
-    public void addCustomer(Customer customer) {
-        repository.save(customer);
-    }
-
-    public void updateCustomer(Long id, Customer updateCustomer) {
-        if(repository.existsById(id)) {
-           updateCustomer.setId(id);
-           repository.save(updateCustomer);
-        }
+    public Customer getCustomer(Long id) {
+        Optional<Customer> customer = repository.findById(id);
+        return customer.orElse(null);
     }
 
     public List<Customer> searchCustomer(String email, String phone, String firstname,String lastname) {

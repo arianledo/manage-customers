@@ -1,5 +1,6 @@
 package com.arianledo.customers.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,6 +22,7 @@ public class Customer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_entity_id", nullable = false)
+    @JsonIgnore
     private BusinessEntity businessEntity;
 
 }

@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImp implements UserDetailsService {
 
     @Autowired
     private JwtUtils jwtUtils;

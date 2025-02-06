@@ -1,5 +1,6 @@
 package com.arianledo.customers.services;
 
+import com.arianledo.customers.controllers.dto.MeDto;
 import com.arianledo.customers.entities.UserEntity;
 import com.arianledo.customers.repository.UserRepository;
 import com.arianledo.customers.utils.Constants;
@@ -17,6 +18,11 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository repository;
+
+    public MeDto getMyData(String username) {
+        UserEntity user = repository.findByUsername(username);
+        return new MeDto(user.getUsername(), user.getEmail(), user.getBusinessEntity().getName(), user.getBusinessEntity().getId());
+    }
 
     public UserEntity getUser(Long id) {
         Optional<UserEntity> user = repository.findById(id);
@@ -49,6 +55,10 @@ public class UserServiceImp implements UserService {
             updateUser.setId(id);
             repository.save(updateUser);
         }
+    }
+
+    public UserEntity findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 
 //    public List<User> searchUser(String email, String phone, String firstname,String lastname) {

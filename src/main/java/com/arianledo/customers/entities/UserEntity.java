@@ -1,5 +1,6 @@
 package com.arianledo.customers.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,5 +40,6 @@ public class UserEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_entity_id")
+    @JsonIgnore
     private BusinessEntity businessEntity;
 }

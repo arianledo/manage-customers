@@ -16,4 +16,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
     //HQL
     @Query("SELECT u FROM UserEntity u WHERE username = :username AND password = :password")
     List<UserEntity> findByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
+
+    UserEntity findByUsername(String username);
 }

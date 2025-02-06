@@ -1,57 +1,125 @@
+/*
+    customers_service.js
+ */
+
 class CustomerService {
     constructor() {
     }
 
-    async deleteCustomer(id) {
-        let url = URL_SERVER + 'customer/' + id;
-        let config = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': sessionStorage.token
-            }
-        };
+    async getMydata() {
+        const authToken = localStorage.getItem("authToken");
 
-        await fetch(url, config);
-        alert("The customer was eliminated correctly");
-    }
-
-    async getCustomers() {
-        let url = URL_SERVER + 'customer';
-
-        let config = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': sessionStorage.token
-            }
+        if (!authToken) {
+            alert("You are not authenticated");
+            window.location.href = "/login.html";
+            return;    
         }
 
-        return await fetch(url, config);
+        try {
+            let url = URL_SERVER + 'user/me';
+
+            let config = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                }
+            }
+    
+            return await fetch(url, config);
+        } catch (error) {
+            console.log(error);
+            return;
+        }
     }
 
-    async saveCustomer(customer) {
+    async getCustomers(busnessEntityId) {
+        const authToken = localStorage.getItem("authToken");
 
-        let url = URL_SERVER + 'customer';
-        let methodType = 'POST';
-        let messageAlert = 'The customer was added correctly'
-
-        if (customer.id !== '') {
-            url += '/' + customer.id;
-            methodType = 'PUT';
-            messageAlert = 'The customer was updated correctly'
+        if (!authToken) {
+            alert("You are not authenticated");
+            window.location.href = "/login.html";
+            return;    
         }
 
-        let config = {
-            "method": methodType,
-            "body": JSON.stringify(customer),
-            "headers": {
-                'Content-Type': 'application/json'
-            }
-        };
+        try {
+            let url = URL_SERVER + 'customer/' + busnessEntityId;
 
-        await fetch(url, config);
-        alert(messageAlert);
+            let config = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                }
+            }
+    
+            return await fetch(url, config);
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+    }    
+    
+    async saveCustomer(busnessEntityId, customer) {
+        const authToken = localStorage.getItem("authToken");
+
+        if (!authToken) {
+            alert("You are not authenticated");
+            window.location.href = "/login.html";
+            return;    
+        }
+
+        try {
+            let url = URL_SERVER + 'customer/' + busnessEntityId;
+            let methodType = 'POST';
+
+            if (customer.id !== '') {
+                url += '/' + customer.id;
+                methodType = 'PUT';
+            }
+
+            let config = {
+                "method": methodType,
+                "body": JSON.stringify(customer),
+                "headers": {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                }
+            };
+    
+            return await fetch(url, config);
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+    }
+
+    async deleteCustomer(busnessEntityId, id) {
+        const authToken = localStorage.getItem("authToken");
+
+        if (!authToken) {
+            alert("You are not authenticated");
+            window.location.href = "/login.html";
+            return;    
+        }
+
+        try {
+            let url = URL_SERVER + 'customer/' + busnessEntityId + '/' + id;
+
+            let config = {
+                method: 'DELETE',
+                "headers": {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                }
+            };
+    
+            return await fetch(url, config);
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+
     }
 }
 

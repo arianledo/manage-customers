@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "business_entities")
@@ -19,4 +21,7 @@ public class BusinessEntity {
     private String website;
     @CreationTimestamp
     private String creationDate;
+
+    @OneToMany(mappedBy = "businessEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Customer> customers;
 }

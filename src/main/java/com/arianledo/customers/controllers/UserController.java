@@ -1,8 +1,12 @@
 package com.arianledo.customers.controllers;
 
+import com.arianledo.customers.controllers.dto.MeDto;
 import com.arianledo.customers.entities.UserEntity;
 import com.arianledo.customers.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +18,13 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
+    @GetMapping("/me")
+    public ResponseEntity<MeDto> getMyData() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ResponseEntity<>(service.getMyData(principal.toString()), HttpStatus.OK);
+
+    }
 
     @GetMapping("/{id}") // Traer un usuario especifico
     public UserEntity getUser(@PathVariable Long id) {
@@ -30,11 +41,6 @@ public class UserController {
     public void removeUser(@PathVariable Long id) {
         service.removeUser(id);
     }
-
-//    @PostMapping ("/register")
-//    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthCreateUserRequest authCreateUserRequest) {
-//        return new ResponseEntity<>(userDetailsService.createUser(authCreateUserRequest), HttpStatus.CREATED);
-//    }
 
     @PutMapping("/{id}") // Modificar usuario
     public void updateUser(@PathVariable Long id,

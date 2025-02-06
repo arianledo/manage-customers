@@ -3,7 +3,7 @@ package com.arianledo.customers.controllers;
 import com.arianledo.customers.controllers.dto.AuthCreateUserRequest;
 import com.arianledo.customers.controllers.dto.AuthResponse;
 import com.arianledo.customers.controllers.dto.AuthLoginRequest;
-import com.arianledo.customers.services.UserDetailServiceImpl;
+import com.arianledo.customers.services.UserDetailServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     @Autowired
-    private UserDetailServiceImpl userDetailService;
+    private UserDetailServiceImp userDetailService;
 
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login (@RequestBody @Valid AuthLoginRequest userRequest) {
